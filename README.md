@@ -43,37 +43,30 @@ Streamlit Application (Frontend): Interfaccia utente che carica il modello ML, v
 Il progetto è suddiviso in diversi repository, ciascuno per un componente specifico. Di seguito l'elenco dei repository con i rispettivi link:
 | Componente | Ruolo | Repository Link |
 | :--- | :--- | :--- |
-| **Edge Device** | Rilevazione locale (simulata o reale) dei dati. | **[LINK REPO EDGE DEVICE PLACEHOLDER]** |
-| **Gateway / ML Service** | Contiene il Modello ML e l'App Streamlit (questo repository). | **[LINK A QUESTO REPO]** |
+| **Edge Device** | Rilevazione locale (simulata o reale) dei dati. | **https://github.com/MaraMonti/wot-project-2025-rubertomontinari-edge-device** |
+| **Gateway / ML Service** | Contiene il Modello ML e l'App Streamlit (questo repository). | **https://github.com/MaraMonti/wot-project-2025-rubertomontinari-gateway-ml** |
 | **Front-end / App** | (Se separato) Interfaccia utente finale. | **[LINK REPO FRONT-END PLACEHOLDER]** |
-| **Presentation (GitHub Page)** | Sito vetrina del progetto. | **[LINK REPO PRESENTATION PLACEHOLDER]** |
+
 
 *(**NOTA:** I link sopra sono placeholder. Sostituirli con gli URL dei repository effettivi.)*
 
 ---
 
- **D) Dettaglio Componente: Gateway / ML Service (Streamlit App)**
+## D) Dettaglio Componente: Dispositivo Edge
 
-Questo repository contiene il cuore del sistema di previsione, incluso il modello di Machine Learning addestrato e l'applicazione web interattiva sviluppata in Python/Streamlit.
+Questo repository contiene il codice sorgente (principalmente `realtime_data.py`) che gestisce la componente Edge, responsabile dell'acquisizione dei dati in tempo reale e del loro invio al Servizio Gateway/ML per la previsione.
 
-Modello di Previsione
-Algoritmo: XGBoost. È stato scelto per la sua robustezza e capacità di catturare relazioni non lineari nei dati di consumo.
+### Funzione Principale
 
-Addestramento: Il modello è addestrato su un dataset arricchito e pulito di circa 380.000 record.
+La funzione principale dell'Edge Device è:
 
-Obiettivo: Prevedere il consumo totale di energia dell'abitazione per l'intera giornata (a partire da dati storici orari).
+1.  **Generazione/Acquisizione Dati:** Il dispositivo simula l'acquisizione di **temperatura**, **umidità** e **consumo energetico** dall'abitazione.
+2.  **Preparazione del Payload:** I dati vengono formattati in un **payload JSON** standardizzato.
+3.  **Comunicazione:** Il payload viene inviato al Gateway/ML service.
 
-Funzionalità dell'applicazione Streamlit
-L'interfaccia utente fornisce diverse pagine gestite da moduli specifici (predict_from_api.py, dati_home.py, forecast_dashboard.py):
+### Dettagli Tecnici di Invio
 
-Predizione Manuale: Permette di ottenere previsione istantanea basata su input manuali (es. temperatura e umidità).
-
-Predizione da Meteo API: Acquisisce previsioni future (24-48 ore) di temperatura e umidità da Tomorrow.io per generare previsioni proattive del consumo.
-
-Dati Abitazione: Monitoraggio in tempo reale del consumo energetico, temperatura e umidità tramite l'API di Home Assistant.
-
-Dashboard Previsioni: Visualizzazione di metriche di valutazione del modello (MAE, RMSE, R²) e confronti tra valori reali e previsti.
-
-Tecnologie Utilizzate
-
-<img width="888" height="385" alt="Image" src="https://github.com/user-attachments/assets/954e7f44-052c-4ed4-bc7e-f3b4f946caa7" />
+* **Protocollo:** L'invio avviene tramite richiesta **HTTP POST**.
+* **Frequenza:** I dati vengono inviati ogni ora .
+* **Destinazione:** Il payload viene indirizzato all'endpoint `/api/data_ingestion` del servizio Gateway/ML per l'elaborazione.
+* **File:** Il file principale responsabile dell'invio è `realtime_data.py`.
