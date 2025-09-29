@@ -49,7 +49,7 @@ Il progetto è suddiviso in diversi repository, ciascuno per un componente speci
 | **Front-end / App** | (Se separato) Interfaccia utente finale. | **[LINK REPO FRONT-END PLACEHOLDER]** |
 
 
-*(**NOTA:** I link sopra sono placeholder. Sostituirli con gli URL dei repository effettivi.)*
+
 
 ---
 
