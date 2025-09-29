@@ -3,6 +3,8 @@ import requests
 import pandas as pd
 
 BASE_URL = "https://gdfhome.duckdns.org/api/states/"
+
+
 HEADERS = {
     "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1MDdmNjliNjA0MmY0M2M1OTk0NjVmZDRiZmZl"
                      "MWZjNyIsImlhdCI6MTcyNDc1MTMxMywiZXhwIjoyMDQwMTExMzEzfQ.S61REKbuTL1l4yP-iIQRDuZvyCmGWDJoL7"
@@ -19,7 +21,7 @@ ENTITIES = {
 def fetch_current_data(entity_id):
     try:
         url = BASE_URL + entity_id
-        response = requests.get(url, headers=HEADERS)
+        response = requests.get(url, headers=HEADERS, verify=False)
         response.raise_for_status()
         data = response.json()
         return {
